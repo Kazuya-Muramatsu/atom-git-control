@@ -209,6 +209,14 @@ class GitControlView extends View
     git.pullup().then => @update(true)
     return
 
+  stashSaveMenuClick: ->
+    git.stashSave().then => @update(true)
+    return
+
+  stashPopMenuClick: ->
+    git.stashPop().then => @update(true)
+    return
+
   pushMenuClick: ->
     git.getBranches().then (branches) =>  @pushDialog.activate(branches.remote)
     return

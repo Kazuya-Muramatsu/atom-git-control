@@ -99,7 +99,7 @@ callGit = (cmd, parser, nodatalog) ->
       logcb e.stdout, true
       logcb e.message, true
       return
-      
+
 module.exports =
   isInitialised: ->
     return cwd
@@ -222,6 +222,16 @@ module.exports =
     return callGit "rm -- #{files.join(' ')}", (data) ->
       atomRefresh()
       return parseDefault(true)
+
+  stashSave: ->
+    return callGit "stash save", (data) ->
+      atomRefresh()
+      return parseDefault(data)
+
+  stashPop: ->
+    return callGit "stash pop", (data) ->
+      atomRefresh()
+      return parseDefault(data)
 
   status: ->
     return callGit 'status --porcelain --untracked-files=all', parseStatus
