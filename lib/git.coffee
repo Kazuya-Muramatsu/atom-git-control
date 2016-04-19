@@ -229,5 +229,15 @@ module.exports =
       atomRefresh()
       return parseDefault(true)
 
+  stashSave: ->
+    return callGit "stash save", (data) ->
+      atomRefresh()
+      return parseDefault(data)
+
+  stashPop: ->
+    return callGit "stash pop", (data) ->
+      atomRefresh()
+      return parseDefault(data)
+
   status: ->
     return callGit 'status --porcelain --untracked-files=all', parseStatus

@@ -12,6 +12,8 @@ items = [
   { id: 'push', menu: 'Push', icon: 'push', type: 'downstream'}
   { id: 'merge', menu: 'Merge', icon: 'merge', type: 'active'}
   { id: 'branch', menu: 'Branch', icon: 'branch', type: 'active'}
+  { id: 'stashSave', menu: 'Stash Save', icon: 'stash-save', type: 'file merging'}
+  { id: 'stashPop', menu: 'Stash Pop', icon: 'stash-pop', type: 'active'}
   #{ id: 'tag', menu: 'Tag', icon: 'tag'}
   { id: 'flow', menu: 'GitFlow', icon: 'flow', type: 'active', showConfig: 'git-control.showGitFlowButton'}
 ]
