@@ -1,4 +1,5 @@
 Dialog = require './dialog'
+git = require '../git'
 
 module.exports =
 class CommitDialog extends Dialog
@@ -38,6 +39,10 @@ class CommitDialog extends Dialog
   commit: ->
     @deactivate()
     @parentView.commit()
+    # @deactivate()
+    # remote = 'origin'
+    # branch = git.getLocalBranch()
+    # @parentView.push(remote,branch)
     return
 
   getMessage: ->

@@ -99,7 +99,7 @@ callGit = (cmd, parser, nodatalog) ->
       logcb e.stdout, true
       logcb e.message, true
       return
-      
+
 module.exports =
   isInitialised: ->
     return cwd
@@ -153,7 +153,12 @@ module.exports =
 
     return callGit "commit --allow-empty-message -m \"#{message}\"", (data) ->
       atomRefresh()
-      return parseDefault(data)
+      parseDefault(data)
+      cmd = "-c push.default=simple push origin master --porcelain"
+      return callGit cmd, (data) ->
+        atomRefresh()
+        console.log data
+        return parseDefault(data)
 
   checkout: (branch, remote) ->
     return callGit "checkout #{if remote then '--track ' else ''}#{branch}", (data) ->
@@ -207,6 +212,7 @@ module.exports =
     cmd = "-c push.default=simple push #{remote} #{branch} --porcelain"
     return callGit cmd, (data) ->
       atomRefresh()
+      # console.log data
       return parseDefault(data)
 
   log: (branch) ->
