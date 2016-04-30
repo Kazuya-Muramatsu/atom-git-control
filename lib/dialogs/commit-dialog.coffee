@@ -12,7 +12,7 @@ class CommitDialog extends Dialog
         @label 'Commit Message'
         @textarea class: 'native-key-bindings', outlet: 'msg', keyUp: 'colorLength'
         @input type: 'checkbox', class: 'checkbox', checked: 'checked', outlet: 'isAndPush', id: 'isAndPush'
-        @label 'Commit and Push', for: 'isAndPush'
+        @label "Commit and Push origin/#{git.getLocalBranch()}", for: 'isAndPush'
       @div class: 'buttons', =>
         @button class: 'active', click: 'commit', =>
           @i class: 'icon commit'

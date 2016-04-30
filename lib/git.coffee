@@ -213,7 +213,6 @@ module.exports =
     cmd = "-c push.default=simple push #{remote} #{branch} --porcelain"
     return callGit cmd, (data) ->
       atomRefresh()
-      # console.log data
       return parseDefault(data)
 
   log: (branch) ->
