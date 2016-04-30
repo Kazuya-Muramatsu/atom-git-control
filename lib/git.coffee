@@ -147,19 +147,18 @@ module.exports =
       atomRefresh()
       return parseDefault(data)
 
-  commit: (message, remote, branch) ->
+  commit: (message, remote, branch, isAndPush) ->
     message = message or Date.now()
     message = message.replace(/"/g, '\\"')
 
-    console.log remote
-    console.log branch
-
     return callGit "commit --allow-empty-message -m \"#{message}\"", (data) ->
       atomRefresh()
-      parseDefault(data)
-      cmd = "-c push.default=simple push #{remote} #{branch} --porcelain"
-      return callGit cmd, (data) ->
-        atomRefresh()
+      if isAndPush
+        cmd = "-c push.default=simple push #{remote} #{branch} --porcelain"
+        return callGit cmd, (data) ->
+          atomRefresh()
+          return parseDefault(data)
+      else
         return parseDefault(data)
 
   checkout: (branch, remote) ->

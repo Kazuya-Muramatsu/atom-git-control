@@ -11,6 +11,8 @@ class CommitDialog extends Dialog
       @div class: 'body', =>
         @label 'Commit Message'
         @textarea class: 'native-key-bindings', outlet: 'msg', keyUp: 'colorLength'
+        @input type: 'checkbox', class: 'checkbox', checked: 'checked', outlet: 'isAndPush', id: 'isAndPush'
+        @label 'Commit and Push', for: 'isAndPush'
       @div class: 'buttons', =>
         @button class: 'active', click: 'commit', =>
           @i class: 'icon commit'
@@ -39,11 +41,10 @@ class CommitDialog extends Dialog
   commit: ->
     @deactivate()
     @parentView.commit()
-    # @deactivate()
-    # remote = 'origin'
-    # branch = git.getLocalBranch()
-    # @parentView.push(remote,branch)
     return
 
   getMessage: ->
     return "#{@msg.val()} "
+
+  getIsAndPush: ->
+    return @isAndPush.is(':checked')

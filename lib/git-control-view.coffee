@@ -154,10 +154,11 @@ class GitControlView extends View
 
     remote = 'origin'
     branch = git.getLocalBranch()
+    isAndPush = @commitDialog.getIsAndPush()
 
     git.add(files.add)
       .then -> git.remove(files.rem)
-      .then -> git.commit(msg, remote, branch)
+      .then -> git.commit(msg, remote, branch, isAndPush)
       .then => @update()
     return
 
