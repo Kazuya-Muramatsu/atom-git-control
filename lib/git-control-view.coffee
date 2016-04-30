@@ -152,9 +152,12 @@ class GitControlView extends View
     files = @filesView.getSelected()
     @filesView.unselectAll()
 
+    remote = 'origin'
+    branch = git.getLocalBranch()
+
     git.add(files.add)
       .then -> git.remove(files.rem)
-      .then -> git.commit(msg)
+      .then -> git.commit(msg, remote, branch)
       .then => @update()
     return
 
