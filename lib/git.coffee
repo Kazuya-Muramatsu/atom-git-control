@@ -17,6 +17,12 @@ atomRefresh = ->
   repo.refreshStatus() # not public/in docs
   return
 
+gitPush = (remote, branch) ->
+  cmd = "-c push.default=simple push #{remote} #{branch} --porcelain"
+  return callGit cmd, (data) ->
+    atomRefresh()
+    return parseDefault(data)
+
 getBranches = -> q.fcall ->
   branches = local: [], remote: [], tags: []
   refs = repo.getReferences()
@@ -152,13 +158,10 @@ module.exports =
     message = message.replace(/"/g, '\\"')
 
     return callGit "commit --allow-empty-message -m \"#{message}\"", (data) ->
-      atomRefresh()
       if isAndPush
-        cmd = "-c push.default=simple push #{remote} #{branch} --porcelain"
-        return callGit cmd, (data) ->
-          atomRefresh()
-          return parseDefault(data)
+        gitPush(remote, branch)
       else
+        atomRefresh()
         return parseDefault(data)
 
   checkout: (branch, remote) ->
@@ -210,10 +213,7 @@ module.exports =
       return parseDefault(data)
 
   push: (remote,branch)->
-    cmd = "-c push.default=simple push #{remote} #{branch} --porcelain"
-    return callGit cmd, (data) ->
-      atomRefresh()
-      return parseDefault(data)
+    gitPush(remote, branch)
 
   log: (branch) ->
     return callGit "log origin/#{repo.getUpstreamBranch() or 'master'}..#{branch}", parseDefault
