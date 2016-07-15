@@ -3,33 +3,28 @@ Dialog = require './dialog'
 git = require '../git'
 
 module.exports =
-class MergeDialog extends Dialog
+class RebaseDialog extends Dialog
   @content: ->
     @div class: 'dialog', =>
       @div class: 'heading', =>
         @i class: 'icon x clickable', click: 'cancel'
-        @strong 'Merge'
+        @strong 'Rebase'
       @div class: 'body', =>
         @label 'Current Branch'
         @input class: 'native-key-bindings', type: 'text', readonly: true, outlet: 'toBranch'
-        @label 'Merge From Branch'
+        @label 'Rebase On Branch'
         @select class: 'native-key-bindings', outlet: 'fromBranch'
-        @div =>
-          @input type: 'checkbox',class: 'checkbox',outlet: 'noff'
-          @label 'No Fast-Forward'
+        
       @div class: 'buttons', =>
-        @button class: 'active', click: 'merge', =>
-          @i class: 'icon merge'
-          @span 'Merge'
+        @button class: 'active', click: 'rebase', =>
+          @i class: 'icon circuit-board'
+          @span 'Rebase'
         @button click: 'cancel', =>
           @i class: 'icon x'
           @span 'Cancel'
 
   activate: (branches) ->
     current = git.getLocalBranch()
-
-    if atom.config.get("git-control.noFastForward")
-      @noff.prop("checked", true)
 
     @toBranch.val(current)
     @fromBranch.find('option').remove()
@@ -39,10 +34,8 @@ class MergeDialog extends Dialog
 
     return super()
 
-  merge: ->
+  rebase: ->
     @deactivate()
-    @parentView.merge(@fromBranch.val(),@noFF())
-    return
+    @parentView.rebase(@fromBranch.val())
 
-  noFF: ->
-     return @noff.is(':checked')
+    return

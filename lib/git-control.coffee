@@ -1,5 +1,6 @@
 GitControlView = require './git-control-view'
 {CompositeDisposable} = require 'atom'
+git = require './git'
 
 CMD_TOGGLE = 'git-control:toggle'
 EVT_SWITCH = 'pane-container:active-pane-item-changed'
@@ -40,6 +41,10 @@ module.exports = GitControl =
 
     return
 
+  updatePaths: ->
+     git.setProjectIndex(0)
+     return
+
   updateViews: ->
     activeView = atom.workspace.getActivePane().getActiveItem()
     for v in views when v is activeView
@@ -58,3 +63,8 @@ module.exports = GitControl =
       description: 'Show the GitFlow button in the Git Control toolbar'
       type: 'boolean'
       default: true
+    noFastForward:
+      title: 'Disable Fast Forward'
+      description: 'Disable Fast Forward for default at Git Merge'
+      type: 'boolean'
+      default: false
