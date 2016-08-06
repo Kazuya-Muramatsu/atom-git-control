@@ -137,6 +137,10 @@ module.exports =
   getRemoteBranch: ->
     return repo.getUpstreamBranch()
 
+  getConfigKey: (key) ->
+    return callGit "config --get #{key}", (data) -> q.fcall ->
+      return data.replace(/\r?\n/g, "")
+
   isMerging: ->
     return fs.existsSync(path.join(repo.path, 'MERGE_HEAD'))
 
