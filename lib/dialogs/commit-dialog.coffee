@@ -22,9 +22,11 @@ class CommitDialog extends Dialog
           @span 'Cancel'
 
   activate: ->
+    super()
     @msg.val('')
+    @msg.focus()
     @commitAndPushLabel.text("Commit and Push origin/#{git.getLocalBranch()}")
-    return super()
+    return
 
   colorLength: ->
     too_long = false
