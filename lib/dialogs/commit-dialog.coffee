@@ -1,3 +1,5 @@
+fs = require 'fs'
+
 Dialog = require './dialog'
 git = require '../git'
 
@@ -25,6 +27,12 @@ class CommitDialog extends Dialog
     super()
     @msg.val('')
     @msg.focus()
+    git.getConfigKey('commit.template').then (path) =>
+      fs.readFile path, (err, data) =>
+        if (err)
+          @msg.val('')
+        else
+          @msg.val(data)
     @commitAndPushLabel.text("Commit and Push origin/#{git.getLocalBranch()}")
     return
 
